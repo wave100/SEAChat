@@ -8,6 +8,7 @@ package seachat.net;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
+import java.net.InetAddress;
 import java.net.MulticastSocket;
 
 /**
@@ -17,7 +18,6 @@ import java.net.MulticastSocket;
 public class Sender {
     
     MulticastSocket sendSocket;
-    DatagramPacket packet;
     
     public Sender(MulticastSocket s) {
         sendSocket = s;
@@ -25,6 +25,7 @@ public class Sender {
     
     public void send(String s) throws IOException {
       //For testing purposes only. Replace String s with Protocol p.
+        DatagramPacket packet = new DatagramPacket(s.getBytes(), s.length(), InetAddress.getByName("234.235.236.237"), 58394);
         packet.setData(s.getBytes());
         sendSocket.send(packet);
     }
