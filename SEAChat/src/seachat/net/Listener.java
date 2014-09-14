@@ -11,7 +11,6 @@ import java.net.DatagramPacket;
 import java.net.MulticastSocket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import sun.applet.Main;
 
 /**
  *
@@ -25,6 +24,7 @@ public class Listener implements Runnable {
     
     @Override
     public void run() {
+        while(1==1) {
         try {
             socket.receive(packet);
             packet.getData();
@@ -32,6 +32,7 @@ public class Listener implements Runnable {
             //Send packet to protocol
         } catch (IOException ex) {
             Logger.getLogger(Listener.class.getName()).log(Level.SEVERE, null, ex);
+        }
         }
     }
     
