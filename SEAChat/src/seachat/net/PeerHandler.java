@@ -30,13 +30,14 @@ public class PeerHandler {
     
     public InetAddress locateGroup(String name) throws IOException {
         discoverySocket.send(packet);
+        return InetAddress.getByName("0.0.0.0");
     }
     
     public MulticastSocket joinGroup(InetAddress i) {
-        
+        return groupSocket;
     }
     
     public MulticastSocket createGroup(String name) {
-        
+        return groupSocket;
     }
 }
