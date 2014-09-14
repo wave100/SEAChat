@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
+import java.util.Random;
 
 /**
  *
@@ -32,12 +33,17 @@ public class PeerHandler {
         discoverySocket.send(packet);
         return InetAddress.getByName("0.0.0.0");
     }
-    
+    public Boolean findGroup(String name) {
+        return false;
+    }
     public MulticastSocket joinGroup(InetAddress i) {
         return groupSocket;
     }
     
-    public MulticastSocket createGroup(String name) {
+    public MulticastSocket createGroup(String name) throws IOException {
+        Random rand = new Random();
+        groupSocket = new MulticastSocket(58394);
+        groupSocket.joinGroup(InetAddress.getByName("234.235.237." + String.valueOf(rand.nextInt(255))));
         return groupSocket;
     }
 }
