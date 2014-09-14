@@ -28,6 +28,7 @@ public abstract class Protocol {
     //char0 char1 is version
     //char2 - 4 is protocol number
     //char5-19 is length info
+    //char20-24 is username
     //char length is 500, no less no more
     public Protocol(){
         
