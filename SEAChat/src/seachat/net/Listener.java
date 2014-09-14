@@ -11,6 +11,7 @@ import java.net.DatagramPacket;
 import java.net.MulticastSocket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import seachat.net.protocol.Protocol;
 
 /**
  *
@@ -28,9 +29,17 @@ public class Listener implements Runnable {
         try {
             socket.receive(packet);
             packet.getData();
+            seachat.SEAChat.log(buffer.toString());
+            for(int a = 0; a < buffer.length; a++){
+                seachat.SEAChat.log(a + " : " + buffer[a]);
+            }
             seachat.SEAChat.log(new String(buffer));
             //Send packet to protocol
-        } catch (IOException ex) {
+            Protocol prot = Protocol.getProtocol(buffer);
+            seachat.SEAChat.log(prot.getContent());
+            seachat.SEAChat.log(prot.getProtocolNumber() + "");
+            seachat.SEAChat.log(prot.getSender());
+        } catch (IOException | IllegalAccessException | InstantiationException ex) {
             Logger.getLogger(Listener.class.getName()).log(Level.SEVERE, null, ex);
         }
         }
