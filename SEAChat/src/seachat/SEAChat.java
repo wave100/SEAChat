@@ -43,6 +43,7 @@ public class SEAChat {
         } catch (IOException ex) {
             Logger.getLogger(SEAChat.class.getName()).log(Level.SEVERE, null, ex);
         }
+        seachat.gui.Chat.main(new String[1]);
     }
     
     public static void log(String s) {
