@@ -23,9 +23,9 @@ public class Sender {
         sendSocket = s;
     }
     
-    public void send(String s) throws IOException {
+    public void send(String s, InetAddress i, int p) throws IOException {
       //For testing purposes only. Replace String s with Protocol p.
-        DatagramPacket packet = new DatagramPacket(s.getBytes(), s.length(), InetAddress.getByName("234.235.236.237"), 58394);
+        DatagramPacket packet = new DatagramPacket(s.getBytes(), s.length(), i, p);
         packet.setData(s.getBytes());
         sendSocket.send(packet);
     }

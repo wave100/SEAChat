@@ -39,7 +39,7 @@ public class SEAChat {
             t.start();
             Sender s = new Sender(discoveryListener.getSocket());
         try {
-            s.send("Hello, world!");
+            s.send("Hello, world!", InetAddress.getByName("234.235.236.237"), 58394);
         } catch (IOException ex) {
             Logger.getLogger(SEAChat.class.getName()).log(Level.SEVERE, null, ex);
         }
