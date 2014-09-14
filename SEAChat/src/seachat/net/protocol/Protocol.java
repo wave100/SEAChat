@@ -6,6 +6,7 @@
 
 package seachat.net.protocol;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,15 +16,16 @@ import java.util.Map;
  */
 public abstract class Protocol {
     
-    private static final String VERSION = "01";
-    private static final Map<Integer, Class<Protocol>> mapOfProtocol;
+    protected static final String VERSION = "01";
+    private static final Map<Integer, Class<? extends Protocol>> mapOfProtocol;
     static{
         mapOfProtocol = new HashMap<>();
-        mapOfProtocol.put(0, Protocol.class);
+        mapOfProtocol.put(0, Protocol0.class);
+        mapOfProtocol.put(1, Protocol1.class);
     }
     
-    private int ProtocolNumber;
-    private String Sender;
+    protected int ProtocolNumber;
+    protected String Sender;
     
     //char0 char1 is version
     //char2 - 4 is protocol number
@@ -35,37 +37,67 @@ public abstract class Protocol {
     }
     
     public Protocol(String message){
-        this.setMessage(message);
+        this.setContent(message);
     }
     
     public Protocol(Protocol protocol){
         
     }
     
+    @Deprecated
     public static Protocol getProtocol(String message) throws IllegalAccessException, InstantiationException{
         if(correctVersion(message)){
             int protocolNumber = parseForProtocolNumber(message);
             Protocol protocol = mapOfProtocol.get(protocolNumber).newInstance();
             protocol.setProtocolNumber(protocolNumber);
             protocol.setSender(parseForSender(message));
-            protocol.setMessage(parseForContent(message, parseForLength(message)));
+            protocol.setContent(parseForContent(message, parseForLength(message)));
             return protocol;
         }
         return null;
     }
     
+    public static Protocol getProtocol(byte[] message) throws IllegalAccessException, InstantiationException{
+        if(correctVersion(message)){
+            seachat.SEAChat.log("passed");
+            int protocolNumber = parseForProtocolNumber(message);
+            Protocol protocol = mapOfProtocol.get(protocolNumber).newInstance();
+            protocol.setProtocolNumber(protocolNumber);
+            protocol.setSender(parseForSender(message));
+            protocol.setContent(parseForContent(message, parseForLength(message)));
+            return protocol;
+        }
+        return null;
+    }
+    
+    @Deprecated
     private static int parseForProtocolNumber(String message){
         return Integer.valueOf(message.substring(2, 4));
     }
     
+    private static int parseForProtocolNumber(byte[] message){
+        return Integer.parseInt(new String(Arrays.copyOfRange(message, 2, 5)));
+    }
+    
+    @Deprecated
     private static int parseForLength(String message){
         return Integer.valueOf(message.substring(5, 19));
     }
     
+    private static int parseForLength(byte[] message){
+        return Integer.valueOf(new String(Arrays.copyOfRange(message, 5, 20)));
+    }
+    
+    @Deprecated
     private static String parseForSender(String message){
         return message.substring(20, 24);
     }
     
+    private static String parseForSender(byte[] message){
+        return new String(Arrays.copyOfRange(message, 20, 25));
+    }
+    
+    @Deprecated
     private static String parseForContent(String message, int Length){
         if(Length == 0){
             return "";
@@ -73,8 +105,24 @@ public abstract class Protocol {
         return message.substring(50, 49 + Length);
     }
     
+    private static String parseForContent(byte[] message, int Length){
+        if(Length == 0){
+            return "";
+        }
+        return new String(Arrays.copyOfRange(message, 50, 50 + Length));
+    }
+    
+    @Deprecated
     private static boolean correctVersion(String message){
         return VERSION.equals(message.substring(0, 1));
+    }
+    
+    private static boolean correctVersion(byte[] message){
+        seachat.SEAChat.log("getting version");
+        seachat.SEAChat.log((Arrays.copyOfRange(message, 0, 2)).length);
+        seachat.SEAChat.log("getting version...");
+        seachat.SEAChat.log("getting version: " + new String(Arrays.copyOfRange(message, 0, 2)));
+        return VERSION.equals(new String(Arrays.copyOfRange(message, 0, 2)));
     }
     
     public void setProtocolNumber(int Number){
@@ -86,6 +134,9 @@ public abstract class Protocol {
     }
     
     public void setSender(String sender){
+        if(sender.length() > 5){
+            return;
+        }
         this.Sender = sender;
     }
     
@@ -98,9 +149,12 @@ public abstract class Protocol {
         return mapOfProtocol.get(Number).newInstance();
     }
     
+    @Deprecated
+    @Override
     public abstract String toString();
     public abstract void invoked();
     public abstract void sendMessage();
     public abstract byte[] returnByteArray();
-    public abstract void setMessage(String content);
+    public abstract void setContent(String content);
+    public abstract String getContent();
 }
