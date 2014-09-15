@@ -76,7 +76,7 @@ public abstract class Protocol {
     }
     
     private static int parseForProtocolNumber(byte[] message){
-        return Integer.parseInt(new String(Arrays.copyOfRange(message, 2, 5)));
+        return Integer.parseInt((new String(Arrays.copyOfRange(message, 2, 5))).trim());
     }
     
     @Deprecated
@@ -85,7 +85,7 @@ public abstract class Protocol {
     }
     
     private static int parseForLength(byte[] message){
-        return Integer.valueOf(new String(Arrays.copyOfRange(message, 5, 20)));
+        return Integer.valueOf(new String(Arrays.copyOfRange(message, 5, 20)).trim());
     }
     
     @Deprecated

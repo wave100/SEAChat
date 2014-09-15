@@ -33,7 +33,7 @@ public class Protocol0 extends Protocol{
     public void invoked() {
         
         seachat.SEAChat.log("Working?");
-        seachat.SEAChat.chat.getChatBox().add(new JLabel("Fuck this"));
+        //seachat.SEAChat.chat.getChatBox().add(new JLabel("Fuck this"));
     }
 
     @Override

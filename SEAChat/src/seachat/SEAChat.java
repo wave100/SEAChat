@@ -44,15 +44,9 @@ public class SEAChat {
 
             Thread t = new Thread(discoveryListener);
             t.start();
-            Sender s = new Sender(discoveryListener.getSocket());
-        try {
-            s.send("Hello, world!", InetAddress.getByName("234.235.236.237"), 58394);
-        } catch (IOException ex) {
-            Logger.getLogger(SEAChat.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            s = new Sender(discoveryListener.getSocket());
         seachat.gui.Chat c = new seachat.gui.Chat();
         c.main();
-            s = new Sender(discoveryListener.getSocket());
             Protocol prot = new Protocol0();
         prot.setSender("Ugly");
         prot.setContent("Person, You, Fuck you");
