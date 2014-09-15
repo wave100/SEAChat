@@ -11,6 +11,8 @@ import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
 import java.util.Random;
+import seachat.net.protocol.Protocol;
+import seachat.net.protocol.Protocol1;
 
 /**
  *
@@ -21,6 +23,8 @@ public class PeerHandler {
     private MulticastSocket groupSocket;
     private MulticastSocket discoverySocket;
     private DatagramPacket packet;
+    private Sender discoverySender;
+    
     
     public MulticastSocket joinDiscoveryGroup(InetAddress i) throws IOException {
         discoverySocket = new MulticastSocket(58394);
@@ -30,13 +34,18 @@ public class PeerHandler {
     }
     
     public InetAddress locateGroup(String name) throws IOException {
+        Protocol discovery = new Protocol1();
+        packet.setData(discovery.getContent().getBytes());
         discoverySocket.send(packet);
         return InetAddress.getByName("0.0.0.0");
     }
-    public Boolean findGroup(String name) {
+    public Boolean groupExists(String name) {
         return false;
     }
-    public MulticastSocket joinGroup(InetAddress i) {
+    public MulticastSocket joinGroup(InetAddress i) throws IOException {
+        groupSocket = new MulticastSocket(58394);
+        groupSocket.joinGroup(i);
+        groupSocket.setBroadcast(true);
         return groupSocket;
     }
     
