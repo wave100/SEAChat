@@ -59,7 +59,6 @@ public abstract class Protocol {
     
     public static Protocol getProtocol(byte[] message) throws IllegalAccessException, InstantiationException{
         if(correctVersion(message)){
-            seachat.SEAChat.log("passed");
             int protocolNumber = parseForProtocolNumber(message);
             Protocol protocol = mapOfProtocol.get(protocolNumber).newInstance();
             protocol.setProtocolNumber(protocolNumber);
@@ -118,11 +117,14 @@ public abstract class Protocol {
     }
     
     private static boolean correctVersion(byte[] message){
-        seachat.SEAChat.log("getting version");
-        seachat.SEAChat.log((Arrays.copyOfRange(message, 0, 2)).length);
-        seachat.SEAChat.log("getting version...");
-        seachat.SEAChat.log("getting version: " + new String(Arrays.copyOfRange(message, 0, 2)));
         return VERSION.equals(new String(Arrays.copyOfRange(message, 0, 2)));
+    }
+    
+    protected static String parseData(byte[] message, int starting, int ending){
+    if(ending == starting){
+            return "";
+        }
+        return (new String(Arrays.copyOfRange(message, starting, ending))).trim();
     }
     
     public void setProtocolNumber(int Number){
