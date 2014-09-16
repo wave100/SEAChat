@@ -9,6 +9,7 @@ package seachat;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import seachat.gui.Chat;
@@ -25,33 +26,53 @@ import seachat.net.protocol.Protocol0;
 public class SEAChat {
     
     public static Chat chat = new Chat();
-    public static Listener discoveryListener;
     public static Sender s;
     public static String name = "Thing";
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
  
             // TODO code application logic here
-            PeerHandler ph = new PeerHandler();
-            try {
-                discoveryListener = new Listener(ph.joinDiscoveryGroup(InetAddress.getByName("234.235.236.237")));
-            } catch (IOException ex) {
-                Logger.getLogger(SEAChat.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-            Thread t = new Thread(discoveryListener);
-            t.start();
-            s = new Sender(discoveryListener.getSocket());
-        seachat.gui.Chat c = new seachat.gui.Chat();
-        c.main();
-            Protocol prot = new Protocol0();
-        prot.setSender("Ugly");
-        prot.setContent("Person, You, Fuck you");
-        prot.sendMessage();
-        chat.main();
+//            PeerHandler ph = new PeerHandler();
+//            try {
+//                discoveryListener = new Listener(ph.joinDiscoveryGroup(InetAddress.getByName("234.235.236.237")));
+//            } catch (IOException ex) {
+//                Logger.getLogger(SEAChat.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//
+//            Thread discoveryListenerThread = new Thread(discoveryListener);
+//            discoveryListenerThread.start();
+//            s = new Sender(discoveryListener.getSocket());
+//        seachat.gui.Chat c = new seachat.gui.Chat();
+//        c.main();
+//            Protocol prot = new Protocol0();
+//        prot.setSender("xzxy");
+//        prot.setContent("Test Message");
+//        prot.sendMessage();
+//        chat.main();
+        
+        PeerHandler ph = new PeerHandler();
+        Listener discoveryListener;
+        Listener groupListener;
+        discoveryListener = new Listener(ph.joinDiscoveryGroup(InetAddress.getByName("234.235.236.237")));
+        groupListener = new Listener(ph.createGroup("testgroup"));
+        Sender discoverySender = new Sender(discoveryListener.getSocket());
+        Sender groupSender = new Sender(groupListener.getSocket());
+        Thread discoveryListenerThread = new Thread(discoveryListener);
+        Thread groupListenerThread = new Thread(groupListener);
+        discoveryListenerThread.start();
+        groupListenerThread.start();
+        
+        Scanner sc = new Scanner(System.in);
+        while (sc.hasNextLine()) {
+            
+            discoverySender.send(sc.nextLine(), InetAddress.getByName("234.235.236.237"), 58394);
+            
+        }
+        
+        
     }
     
     public static void log(String s) {
