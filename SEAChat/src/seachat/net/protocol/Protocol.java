@@ -41,7 +41,7 @@ public abstract class Protocol {
     }
     
     public Protocol(Protocol protocol){
-        
+        return;
     }
     
     @Deprecated
