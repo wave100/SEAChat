@@ -22,22 +22,24 @@ public class PeerHandler {
     
     private MulticastSocket groupSocket;
     private MulticastSocket discoverySocket;
-    private DatagramPacket packet;
     private Sender discoverySender;
+    private byte[] buffer = new byte[500];
+    private DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
     
     
     public MulticastSocket joinDiscoveryGroup(InetAddress i) throws IOException {
         discoverySocket = new MulticastSocket(58394);
         discoverySocket.joinGroup(i);
         discoverySocket.setBroadcast(true); //This is for compatibility.
+        discoverySender = new Sender(discoverySocket);
         return discoverySocket;
     }
     
     public InetAddress locateGroup(String name) throws IOException {
         Protocol discovery = new Protocol1();
-        packet.setData(discovery.getContent().getBytes());
-        discoverySocket.send(packet);
-        return InetAddress.getByName("0.0.0.0");
+        discoverySender.send(discovery.getContent(), discoverySocket.getInetAddress(), 58394);
+        discoverySocket.receive(packet);
+        return InetAddress.getByName(packet.getData().toString());
     }
     public Boolean groupExists(String name) {
         return false;

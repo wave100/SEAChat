@@ -18,7 +18,7 @@ import java.net.UnknownHostException;
  */
 public class Sender {
     
-    MulticastSocket sendSocket;
+    private MulticastSocket sendSocket;
     
     public Sender(MulticastSocket s) {
         sendSocket = s;
@@ -31,6 +31,7 @@ public class Sender {
         sendSocket.send(packet);
     }
     
+    @Deprecated
     public void send(byte[] s) throws IOException{
         DatagramPacket packet = new DatagramPacket(s, s.length, InetAddress.getByName("234.235.236.237"), 58394);
         packet.setData(s);
