@@ -29,6 +29,7 @@ public class Listener implements Runnable {
         try {
             socket.receive(packet);
             packet.getData();
+            Protocol.getProtocol(buffer);
             //There is a better way to do this. I do not know what it is. And now I do. new String(byte[]);.
             // Move content declaration outside this loop.
             String content = new String(buffer);
@@ -46,7 +47,11 @@ public class Listener implements Runnable {
 //            seachat.SEAChat.log(prot.getSender());
         } catch (IOException ex) {
             Logger.getLogger(Listener.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }   catch (IllegalAccessException ex) {
+                Logger.getLogger(Listener.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InstantiationException ex) {
+                Logger.getLogger(Listener.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
     

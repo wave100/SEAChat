@@ -17,10 +17,10 @@ import java.net.UnknownHostException;
  * @author Rish
  */
 public class Sender {
+    //Add a close() method! 
+    private final MulticastSocket sendSocket;
     
-    private MulticastSocket sendSocket;
-    
-    public Sender(MulticastSocket s) {
+    public Sender(MulticastSocket s, int protocolNumber) {
         sendSocket = s;
     }
     

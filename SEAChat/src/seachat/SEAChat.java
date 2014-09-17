@@ -28,6 +28,19 @@ public class SEAChat {
     public static Chat chat = new Chat();
     public static Sender s;
     public static String name = "Thing";
+    
+    
+    
+        private static PeerHandler ph;
+        private static Listener discoveryListener;
+        private static Listener groupListener;
+        private static Sender discoverySender;
+        private static Sender groupSender;
+        private static Thread discoveryListenerThread;
+        private static Thread groupListenerThread;
+    
+    
+    
 
     /**
      * @param args the command line arguments
@@ -53,15 +66,13 @@ public class SEAChat {
 //        prot.sendMessage();
 //        chat.main();
         
-        PeerHandler ph = new PeerHandler();
-        Listener discoveryListener;
-        Listener groupListener;
+        ph = new PeerHandler();
         discoveryListener = new Listener(ph.joinDiscoveryGroup(InetAddress.getByName("234.235.236.237")));
         groupListener = new Listener(ph.createGroup("testgroup"));
-        Sender discoverySender = new Sender(discoveryListener.getSocket());
-        Sender groupSender = new Sender(groupListener.getSocket());
-        Thread discoveryListenerThread = new Thread(discoveryListener);
-        Thread groupListenerThread = new Thread(groupListener);
+        discoverySender = new Sender(discoveryListener.getSocket(), 1);
+        groupSender = new Sender(groupListener.getSocket(), 0);
+        discoveryListenerThread = new Thread(discoveryListener);
+        groupListenerThread = new Thread(groupListener);
         discoveryListenerThread.start();
         groupListenerThread.start();
         
@@ -81,5 +92,13 @@ public class SEAChat {
     
     public static void log(int i) {
         System.out.println(i);
+    }
+    
+    public Sender getGroupSender() {
+        return groupSender;
+    }
+    
+    public Sender getDiscoverySender() {
+        return discoverySender;
     }
 }
