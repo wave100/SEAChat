@@ -68,7 +68,13 @@ public class SEAChat {
         
         ph = new PeerHandler();
         discoveryListener = new Listener(ph.joinDiscoveryGroup(InetAddress.getByName("234.235.236.237")));
-        groupListener = new Listener(ph.createGroup("testgroup"));
+        
+        
+        if (!ph.groupExists("testgroup")) {
+            groupListener = new Listener(ph.createGroup("testgroup"));
+        } else {
+            groupListener = new Listener(ph.joinGroup(ph.locateGroup("testgroup")));
+        }
         discoverySender = new Sender(discoveryListener.getSocket(), 1);
         groupSender = new Sender(groupListener.getSocket(), 0);
         discoveryListenerThread = new Thread(discoveryListener);

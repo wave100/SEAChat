@@ -39,7 +39,7 @@ public class PeerHandler {
         Protocol discovery = new Protocol1();
         discoverySender.send(discovery.getContent(), discoverySocket.getInetAddress(), 58394);
         discoverySocket.receive(packet);
-        return InetAddress.getByName(packet.getData().toString());
+        return InetAddress.getByName(new String(packet.getData()));
     }
     public Boolean groupExists(String name) {
         return false;

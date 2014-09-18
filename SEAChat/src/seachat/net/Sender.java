@@ -31,10 +31,21 @@ public class Sender {
         sendSocket.send(packet);
     }
     
-    @Deprecated
-    public void send(byte[] s) throws IOException{
-        DatagramPacket packet = new DatagramPacket(s, s.length, InetAddress.getByName("234.235.236.237"), 58394);
-        packet.setData(s);
+    public void send(String s) throws IOException{
+        DatagramPacket packet = new DatagramPacket(s.getBytes(), s.getBytes().length, sendSocket.getInetAddress(), 58394);
+        packet.setData(s.getBytes());
+        sendSocket.send(packet);
+    }
+    
+    public void send(byte[] b) throws IOException {
+        DatagramPacket packet = new DatagramPacket(b, b.length, sendSocket.getInetAddress(), 58394);
+        packet.setData(b);
+        sendSocket.send(packet);
+    }
+    
+    public void send(byte[] b, InetAddress i, int p) throws IOException {
+        DatagramPacket packet = new DatagramPacket(b, b.length, i, p);
+        packet.setData(b);
         sendSocket.send(packet);
     }
 }
