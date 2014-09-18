@@ -6,6 +6,8 @@
 
 package seachat.net.protocol;
 
+import seachat.net.Sender;
+
 /**
  *
  * @author Yiwen Dong
@@ -23,7 +25,7 @@ public class Protocol1 extends Protocol{
     }
 
     @Override
-    public void sendMessage() {
+    public void sendMessage(Sender sender) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
