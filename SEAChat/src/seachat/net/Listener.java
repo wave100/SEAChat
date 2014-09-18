@@ -19,9 +19,9 @@ import seachat.net.protocol.Protocol;
  */
 public class Listener implements Runnable {
     
-    private MulticastSocket socket;
+    private final MulticastSocket socket;
     private byte[] buffer = new byte[500];
-    private DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
+    private final DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
     
     @Override
     public void run() {
@@ -29,13 +29,17 @@ public class Listener implements Runnable {
         try {
             socket.receive(packet);
             packet.getData();
-            Protocol.getProtocol(buffer);
+            packet.getLength();
+            packet.setLength(500);
             //There is a better way to do this. I do not know what it is. And now I do. new String(byte[]);.
             // Move content declaration outside this loop.
             String content = new String(buffer);
             seachat.SEAChat.log(content);
-            
             buffer = new byte[500];
+            packet.setData(buffer);
+            
+            
+
             //Create protocol object from packet, send to UI class for processing.
 //            Yiwen's Pakcet Test Code
 //            for(int a = 0; a < buffer.length; a++){
@@ -49,11 +53,7 @@ public class Listener implements Runnable {
 //            seachat.SEAChat.log(prot.getSender());
         } catch (IOException ex) {
             Logger.getLogger(Listener.class.getName()).log(Level.SEVERE, null, ex);
-        }   catch (IllegalAccessException ex) {
-                Logger.getLogger(Listener.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (InstantiationException ex) {
-                Logger.getLogger(Listener.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        }
         }
     }
     

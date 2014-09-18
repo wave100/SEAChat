@@ -95,11 +95,11 @@ public class SEAChat {
     }
     
     public static void log(String s) {
-        System.out.println(s);
+        System.out.println("MAIN-LOG-STR: " + s);
     }
     
     public static void log(int i) {
-        System.out.println(i);
+        System.out.println("MAIN-LOG-INT:" + i);
     }
     
     public Sender getGroupSender() {

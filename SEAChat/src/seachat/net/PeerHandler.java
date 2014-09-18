@@ -31,7 +31,7 @@ public class PeerHandler {
         discoverySocket = new MulticastSocket(58394);
         discoverySocket.joinGroup(i);
         discoverySocket.setBroadcast(true); //This is for compatibility.
-        discoverySender = new Sender(discoverySocket, 1);
+        discoverySender = new Sender(discoverySocket, 1); //Why the hell am I making a sender here. WHY.
         return discoverySocket;
     }
     
