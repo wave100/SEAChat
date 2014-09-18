@@ -34,6 +34,8 @@ public class Listener implements Runnable {
             // Move content declaration outside this loop.
             String content = new String(buffer);
             seachat.SEAChat.log(content);
+            
+            buffer = new byte[500];
             //Create protocol object from packet, send to UI class for processing.
 //            Yiwen's Pakcet Test Code
 //            for(int a = 0; a < buffer.length; a++){
