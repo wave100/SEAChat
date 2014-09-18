@@ -9,6 +9,7 @@ package seachat.net.protocol;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import seachat.net.Sender;
 
 /**
  *
@@ -127,6 +128,24 @@ public abstract class Protocol {
         return (new String(Arrays.copyOfRange(message, starting, ending))).trim();
     }
     
+    protected static byte[] addDataL(byte[] message, int starting, byte[] data){
+        for(int a = starting; a < data.length + starting; a++){
+                message[a] = data[a - starting];
+            }
+        return message;
+    }
+    
+    protected static byte[] addDataR(byte[] message, int ending, byte[] data){
+        int dataLength = data.length;
+            int lengthStarting = ending + 1 - dataLength;
+            int lengthLocation = ending + 1 - dataLength;
+            while(lengthLocation <= ending){
+                message[lengthLocation] = data[lengthLocation - lengthStarting];
+                lengthLocation++;
+            }
+        return message;
+    }
+    
     public void setProtocolNumber(int Number){
         this.ProtocolNumber = Number;
     }
@@ -155,7 +174,7 @@ public abstract class Protocol {
     @Override
     public abstract String toString();
     public abstract void invoked();
-    public abstract void sendMessage();
+    public abstract void sendMessage(Sender sender);
     public abstract byte[] returnByteArray();
     public abstract void setContent(String content);
     public abstract String getContent();
