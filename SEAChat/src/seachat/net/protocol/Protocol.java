@@ -25,13 +25,15 @@ public abstract class Protocol {
         mapOfProtocol.put(1, Protocol1.class);
     }
     
-    protected int ProtocolNumber;
-    protected String Sender;
+    protected int ProtocolNumber = -1;
+    protected String Sender = "";
+    protected String Recipient = "";
     
     //char0 char1 is version
     //char2 - 4 is protocol number
     //char5-19 is length info
     //char20-24 is username
+    //char25-29 is recipient - not used by all
     //char length is 500, no less no more
     public Protocol(){
         
@@ -64,6 +66,7 @@ public abstract class Protocol {
             Protocol protocol = mapOfProtocol.get(protocolNumber).newInstance();
             protocol.setProtocolNumber(protocolNumber);
             protocol.setSender(parseForSender(message));
+            protocol.setRecipient(parseForRecipient(message));
             protocol.setContent(parseForContent(message, parseForLength(message)));
             return protocol;
         }
@@ -95,6 +98,10 @@ public abstract class Protocol {
     
     private static String parseForSender(byte[] message){
         return new String(Arrays.copyOfRange(message, 20, 25));
+    }
+    
+    private static String parseForRecipient(byte[] message){
+        return new String(Arrays.copyOfRange(message, 25, 30));
     }
     
     @Deprecated
@@ -163,6 +170,14 @@ public abstract class Protocol {
     
     public String getSender(){
         return this.Sender;
+    }
+    
+    public void setRecipient(String Recipient){
+        this.Recipient = Recipient;
+    }
+    
+    public String getRecipient(){
+        return this.Recipient;
     }
     
     @Deprecated
