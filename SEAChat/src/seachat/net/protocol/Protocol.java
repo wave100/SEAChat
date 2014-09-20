@@ -29,8 +29,8 @@ public abstract class Protocol {
     protected String Sender = "";
     protected String Recipient = "";
     
-    //char0 char1 is version
-    //char2 - 4 is protocol number
+    //char0-1 is version
+    //char2-4 is protocol number
     //char5-19 is length info
     //char20-24 is username
     //char25-29 is recipient - not used by all

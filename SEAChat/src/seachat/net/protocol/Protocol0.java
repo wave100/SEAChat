@@ -13,7 +13,7 @@ import javax.swing.JLabel;
 import seachat.net.Sender;
 
 /**
- * Message Protocol contains message
+ * Message Protocol contains message.
  *
  * @author Yiwen Dong
  */

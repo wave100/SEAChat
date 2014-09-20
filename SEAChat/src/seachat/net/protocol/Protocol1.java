@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 import seachat.net.Sender;
 
 /**
- * This protocol contains the handshake info
+ * This protocol contains the handshake info.
  * @author Yiwen Dong
  */
 public class Protocol1 extends Protocol{
