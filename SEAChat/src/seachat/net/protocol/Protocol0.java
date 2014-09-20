@@ -32,9 +32,7 @@ public class Protocol0 extends Protocol {
 
     @Override
     public void invoked() {
-
-        seachat.SEAChat.log("Working?");
-        //seachat.SEAChat.chat.getChatBox().add(new JLabel("Fuck this"));
+        seachat.SEAChat.log(this.toString());
     }
 
     @Override
@@ -60,6 +58,9 @@ public class Protocol0 extends Protocol {
 
     @Override
     public void setContent(String content) {
+        if(content.length() >= 450){
+            content = content.substring(0, 445) + "...";
+        }
         this.message = content;
     }
 

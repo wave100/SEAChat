@@ -3,24 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package seachat.net.protocol;
 
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import seachat.net.Sender;
 
 /**
- * This protocol contains the handshake info.
- * @author Yiwen Dong
+ *
+ * @author evan__000
  */
-public class Protocol1 extends Protocol{
+public class Protocol2 extends Protocol{
     
-    private String message = System.getProperty("user.name");
+    private String message = "";
     
-    public Protocol1(){
-        super.ProtocolNumber = 1;
+    public Protocol2(){
+        super.ProtocolNumber = 2;
     }
 
     @Override
@@ -34,11 +32,11 @@ public class Protocol1 extends Protocol{
     }
 
     @Override
-    public void sendMessage(Sender sender) {
+    public void sendMessage(seachat.net.Sender sender) {
         try {
-            seachat.SEAChat.s.send(this.returnByteArray());
+            sender.send(this.returnByteArray());
         } catch (IOException ex) {
-            Logger.getLogger(Protocol0.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Protocol2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -53,7 +51,7 @@ public class Protocol1 extends Protocol{
         Protocol.addDataL(byteArray, 50, this.message.getBytes());
         return byteArray;
     }
-    
+
     @Override
     public void setContent(String content) {
         this.message = content;

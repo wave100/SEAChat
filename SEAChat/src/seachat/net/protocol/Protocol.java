@@ -23,6 +23,7 @@ public abstract class Protocol {
         mapOfProtocol = new HashMap<>();
         mapOfProtocol.put(0, Protocol0.class);
         mapOfProtocol.put(1, Protocol1.class);
+        mapOfProtocol.put(2, Protocol2.class);
     }
     
     protected int ProtocolNumber = -1;
@@ -34,6 +35,7 @@ public abstract class Protocol {
     //char5-19 is length info
     //char20-24 is username
     //char25-29 is recipient - not used by all
+    //char50-499 is message
     //char length is 500, no less no more
     public Protocol(){
         
@@ -44,7 +46,10 @@ public abstract class Protocol {
     }
     
     public Protocol(Protocol protocol){
-        return;
+        this.ProtocolNumber = protocol.ProtocolNumber;
+        this.Recipient = protocol.Recipient;
+        this.Sender = protocol.Sender;
+        this.setContent(protocol.getContent());
     }
     
     @Deprecated
@@ -185,7 +190,6 @@ public abstract class Protocol {
         return mapOfProtocol.get(Number).newInstance();
     }
     
-    @Deprecated
     @Override
     public abstract String toString();
     public abstract void invoked();
