@@ -73,6 +73,23 @@ public abstract class Protocol {
             protocol.setSender(parseForSender(message));
             protocol.setRecipient(parseForRecipient(message));
             protocol.setContent(parseForContent(message, parseForLength(message)));
+            protocol.invoked();
+            return protocol;
+        }
+        return null;
+    }
+    
+    public static Protocol getProtocol(byte[] message, boolean runEvent) throws IllegalAccessException, InstantiationException{
+        if(correctVersion(message)){
+            int protocolNumber = parseForProtocolNumber(message);
+            Protocol protocol = mapOfProtocol.get(protocolNumber).newInstance();
+            protocol.setProtocolNumber(protocolNumber);
+            protocol.setSender(parseForSender(message));
+            protocol.setRecipient(parseForRecipient(message));
+            protocol.setContent(parseForContent(message, parseForLength(message)));
+            if(runEvent){
+                protocol.invoked();
+            }
             return protocol;
         }
         return null;
