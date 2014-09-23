@@ -7,6 +7,7 @@ package seachat.net.protocol;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  *
@@ -38,5 +39,9 @@ public class ProtocolEventHandler {
     
     protected void messageGotten(Protocol protocol){
         
+    }
+    
+    private ProtocolEvent[] iterateThoughMapForKey(int key){
+        Set<Integer> keySet = this.mapOfListener.keySet();
     }
 }
