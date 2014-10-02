@@ -9,7 +9,7 @@ package seachat.net.protocol;
  *
  * @author evan__000
  */
-public interface ProtocolEvent {
+public interface ProtocolEventListener {
     
     void gotEvent(Protocol protocol);
     
