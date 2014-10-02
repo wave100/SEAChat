@@ -8,16 +8,11 @@ package seachat;
 
 import java.io.IOException;
 import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import seachat.gui.Chat;
 import seachat.net.Listener;
 import seachat.net.PeerHandler;
 import seachat.net.Sender;
-import seachat.net.protocol.Protocol;
-import seachat.net.protocol.Protocol0;
 
 /**
  *
