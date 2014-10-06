@@ -18,7 +18,11 @@ import seachat.net.Sender;
  * @author Yiwen Dong
  */
 public class Protocol0 extends Protocol {
-
+    
+    static{
+        Protocol.regesterProtocol(0, Protocol0.class);
+    }
+    
     private String message = "";
 
     public Protocol0() {

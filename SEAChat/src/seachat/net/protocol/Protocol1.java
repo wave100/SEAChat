@@ -17,6 +17,10 @@ import seachat.net.Sender;
  */
 public class Protocol1 extends Protocol{
     
+    static{
+        Protocol.regesterProtocol(1, Protocol1.class);
+    }
+    
     private String message = System.getProperty("user.name");
     
     public Protocol1(){

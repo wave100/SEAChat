@@ -15,6 +15,10 @@ import java.util.logging.Logger;
  */
 public class Protocol2 extends Protocol{
     
+    static{
+        Protocol.regesterProtocol(2, Protocol2.class);
+    }
+    
     private String message = "";
     
     public Protocol2(){

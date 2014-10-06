@@ -21,10 +21,9 @@ public abstract class Protocol {
     private static final Map<Integer, Class<? extends Protocol>> mapOfProtocol;
     static{
         mapOfProtocol = new HashMap<>();
-        mapOfProtocol.put(0, Protocol0.class);
-        mapOfProtocol.put(1, Protocol1.class);
-        mapOfProtocol.put(2, Protocol2.class);
     }
+    
+    private static ProtocolEventHandler eventHandler = new ProtocolEventHandler();
     
     protected int ProtocolNumber = -1;
     protected String Sender = "";
@@ -74,6 +73,7 @@ public abstract class Protocol {
             protocol.setRecipient(parseForRecipient(message));
             protocol.setContent(parseForContent(message, parseForLength(message)));
             protocol.invoked();
+            Protocol.eventHandler.messageGotten(protocol);
             return protocol;
         }
         return null;
@@ -205,6 +205,14 @@ public abstract class Protocol {
     @Deprecated
     public static Protocol createProtocol(int Number) throws InstantiationException, IllegalAccessException{
         return mapOfProtocol.get(Number).newInstance();
+    }
+    
+    protected static void regesterProtocol(int number, Class<? extends Protocol> classThing){
+        Protocol.mapOfProtocol.put(number, classThing);
+    }
+    
+    public static ProtocolEventHandler getProtocolEventHandler(){
+        return Protocol.eventHandler;
     }
     
     @Override
