@@ -10,7 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Stream;
 import javax.swing.JLabel;
-import seachat.net.Sender;
+//import seachat.net.Sender;
 
 /**
  * Message Protocol contains message.
@@ -36,16 +36,12 @@ public class Protocol0 extends Protocol {
 
     @Override
     public void invoked() {
-        seachat.SEAChat.log(this.toString());
+        //seachat.SEAChat.log(this.toString());
     }
 
     @Override
-    public void sendMessage(Sender sender) {
-        try {
-            seachat.SEAChat.s.send(this.returnByteArray());
-        } catch (IOException ex) {
-            Logger.getLogger(Protocol0.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public void sendMessage(ProtocolSender sender) {
+        sender.send(this.returnByteArray());
     }
 
     @Override

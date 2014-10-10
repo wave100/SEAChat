@@ -9,7 +9,7 @@ package seachat.net.protocol;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import seachat.net.Sender;
+//import seachat.net.Sender;
 
 /**
  *
@@ -218,7 +218,7 @@ public abstract class Protocol {
     @Override
     public abstract String toString();
     public abstract void invoked();
-    public abstract void sendMessage(Sender sender);
+    public abstract void sendMessage(ProtocolSender sender);
     public abstract byte[] returnByteArray();
     public abstract void setContent(String content);
     public abstract String getContent();

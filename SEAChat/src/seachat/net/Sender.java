@@ -11,12 +11,15 @@ import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
 import java.net.UnknownHostException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import seachat.net.protocol.ProtocolSender;
 
 /**
  *
  * @author Rish
  */
-public class Sender {
+public class Sender implements ProtocolSender{
     //Add a close() method! 
     private final MulticastSocket sendSocket;
     
@@ -37,10 +40,15 @@ public class Sender {
         sendSocket.send(packet);
     }
     
-    public void send(byte[] b) throws IOException {
-        DatagramPacket packet = new DatagramPacket(b, b.length, sendSocket.getInetAddress(), 58394);
-        packet.setData(b);
-        sendSocket.send(packet);
+    @Override
+    public void send(byte[] b){
+        try {
+            DatagramPacket packet = new DatagramPacket(b, b.length, sendSocket.getInetAddress(), 58394);
+            packet.setData(b);
+            sendSocket.send(packet);
+        } catch (IOException ex) {
+            Logger.getLogger(Sender.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public void send(byte[] b, InetAddress i, int p) throws IOException {

@@ -32,16 +32,12 @@ public class Protocol2 extends Protocol{
 
     @Override
     public void invoked() {
-        seachat.SEAChat.log(this.toString());
+        //seachat.SEAChat.log(this.toString());
     }
 
     @Override
-    public void sendMessage(seachat.net.Sender sender) {
-        try {
-            sender.send(this.returnByteArray());
-        } catch (IOException ex) {
-            Logger.getLogger(Protocol2.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public void sendMessage(ProtocolSender sender) {
+        sender.send(this.returnByteArray());
     }
 
     @Override
