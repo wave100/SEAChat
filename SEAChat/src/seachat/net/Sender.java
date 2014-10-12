@@ -6,6 +6,7 @@
 
 package seachat.net;
 
+import io.github.theguy191919.udpft.protocol.ProtocolSender;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
@@ -13,7 +14,7 @@ import java.net.MulticastSocket;
 import java.net.UnknownHostException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import seachat.net.protocol.ProtocolSender;
+//import seachat.net.protocol.ProtocolSender;
 
 /**
  *
