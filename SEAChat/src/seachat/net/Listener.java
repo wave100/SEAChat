@@ -11,7 +11,6 @@ import java.net.DatagramPacket;
 import java.net.MulticastSocket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import seachat.net.protocol.Protocol;
 
 /**
  *

@@ -11,8 +11,9 @@ import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
 import java.util.Random;
-import seachat.net.protocol.Protocol;
-import seachat.net.protocol.Protocol1;
+//import seachat.net.protocol.Protocol;
+//import seachat.net.protocol.Protocol1;
+import io.github.theguy191919.udpft.protocol.*;
 
 /**
  *
