@@ -6,7 +6,7 @@
 
 package seachat.net;
 
-import io.github.theguy191919.udpft.protocol.ProtocolSender;
+import io.github.theguy191919.udpft.net.AbstractProtocolSender;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
@@ -20,7 +20,7 @@ import java.util.logging.Logger;
  *
  * @author Rish
  */
-public class Sender implements ProtocolSender{
+public class Sender implements AbstractProtocolSender{
     //Add a close() method! 
     private final MulticastSocket sendSocket;
     
